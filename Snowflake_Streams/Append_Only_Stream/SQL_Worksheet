@@ -2,3 +2,50 @@ USE ROLE ACCOUNTADMIN;
 USE WAREHOUSE COMPUTE_WH;
 
 USE SCHEMA MYDB.MYSCHEMA;
+
+//Append Only Stream
+
+//Create an Source table
+CREATE OR REPLACE TABLE source_table2(
+    id INT,
+    name VARCHAR,
+    created_date DATE
+);
+// Insert some records on the source table 2
+INSERT INTO source_table2 VALUES
+     (1,'chaos','2023-12-11'),
+     (2,'Genius','2023-12-11');
+
+//create a appemd stream on the table
+CREATE OR REPLACE STREAM append_only_stream ON TABLE source_table2 APPEND_ONLY=True;
+
+//select data from append only stream
+select *from append_only_stream;
+
+//insert into table
+INSERT INTO source_table2 VALUES (3,'johny','2023-12-11');
+
+//select data from table
+select * from source_table2;
+
+// select data from the standard stream
+select * from append_only_stream;
+
+//delete from table2
+DELETE from source_table2 where id=2;
+
+
+//select data from table
+select * from source_table2;   
+
+// select data from the standard stream
+select * from append_only_stream;
+
+//Update the source table
+Update source_table2 SET name ='Elon' WHERE id=1;
+
+//select data from table
+select * from source_table2;
+
+// select data from the standard stream
+select * from append_only_stream;
