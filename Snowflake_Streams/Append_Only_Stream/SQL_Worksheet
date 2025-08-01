@@ -49,3 +49,44 @@ select * from source_table2;
 
 // select data from the standard stream
 select * from append_only_stream;
+
+
+//---How do we use the stream in ETL Process
+
+CREATE OR REPLACE TABLE TARGET_TABLE2(
+id INT,
+name VARCHAR,
+created_date DATE
+);
+
+//select data from the standard stream
+select * from append_only_stream;
+
+//insert into target table
+insert into TARGET_TABLE2
+SELECT ID,NAME,CREATED_DATE FROM append_only_stream;
+
+//select data from append_only_stream
+select * from append_only_stream;
+
+//select data from TARGET TABLE
+SELECT * FROM TARGET_TABLE2;
+
+//Insert into dource table
+INSERT INTO source_table2 VALUES(4,'Rock','2023-12-11');
+
+//select data from the table
+select * from source_table2;
+
+//select data from the append_only_stream
+select * from append_only_stream;
+
+//insert into a target table
+insert into TARGET_TABLE2
+SELECT ID,NAME,CURRENT_DATE FROM APPEND_ONLY_STREAM;
+
+//select data from the standard stream
+select * from append_only_stream;
+
+//select data from target table
+select * from TARGET_TABLE2;
