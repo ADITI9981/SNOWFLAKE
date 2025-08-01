@@ -1,0 +1,10 @@
+
+//--Insert Only Stream---
+
+CREATE EXTERNAL TABLE ext_table
+LOCATION = @MY_AWS_STAGE
+FILE_FORMAT = my_format;
+
+CREATE STREAM my_ext_stream
+ON EXTERNAL TABLE ext_table
+INSERT ONLY = TRUE;
