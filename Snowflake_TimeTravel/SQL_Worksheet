@@ -5,6 +5,18 @@ USE SCHEMA MYDB.MYSCHEMA;
 
 //---------Time Travel (Deleting some rows)-----------
 
+CREATE OR REPLACE TABLE DROP_TABLE
+(
+ID INT,
+NAME VARCHAR
+);
+
+INSERT INTO DROP_TABLE VALUES
+(1,'JOHN'),
+(2,'SAM'),
+(3,'ELAN'),
+(4,'MARK');
+
 
 
 
