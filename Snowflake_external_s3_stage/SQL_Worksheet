@@ -35,7 +35,14 @@ CREATE OR REPLACE STAGE my_s3_stage
   URL = ''
   FILE_FORMAT = my_csv_format;
 
+//ACCESS THE EXTERNAL STAGE
+List @my_S3_stage;
 
+//load data to  customer table without file format
+copy int USER
+FROM @my_s3_stage
+FILE_FORMAT = (FORMAT_NAME = my_csv_format);
 
+SELECT * FROM USER;
 
 
