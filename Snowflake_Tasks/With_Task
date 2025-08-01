@@ -1,1 +1,80 @@
+USE ROLE ACCOUNTADMIN;
+USE WAREHOUSE COMPUTE_WH;
+
+USE SCHEMA MYDB.MYSCHEMA;
+
+//---------Without Task-----------
+
+CREATE OR REPLACE TABLE source_table(
+  id INT,
+  name VARCHAR,
+  created_date DATE
+);
+
+// Insert some records on the source table
+INSERT INTO source_table VALUES
+     (1,'chaos','2023-12-11'),
+     (2,'Genius','2023-12-11');
+
+//select data from source table
+select * from source_table;
+
+//create an target table
+CREATE OR REPLACE TABLE TARGET_TABLE(
+      id INT,
+      name VARCHAR,
+      created_date DATE,
+      created_day VARCHAR,
+      created_month VARCHAR,
+      createed_year VARCHAR
+);
+
+//INSERT INTO TARGET TABLE through task
+CREATE OR REPLACE TASK my_task
+WAREHOUSE = COMPUTE_WH
+SCHEDULE = '1 MINUTE'
+AS
+INSERT INTO TARGET_TABLE
+SELECT
+a.id,
+a.name,
+a.created_date,
+DAY(a.created_date) AS created_day,
+MONTH(a.created_date)AS created_month,
+YEAR(a.created_date) AS created_year
+FROM SOURCE_TABLE A
+LEFT JOIN target_table b
+on a.id = b.id
+where b.id is null;
+
+//SHOW TASKE
+SHOW TASKS;
+
+//alter the task to execute
+ALTER TASK my_task RESUME;
+
+ALTER TASK my_task SUSPEND;
+
+//check the task status
+select * from table (information_schema.TASK_HISTORY(TASK_NAME => 'my_task'));
+
+//select data from target table
+select * from target_table;
+
+//insert some record into source table
+INSERT INTO SOURCE_TABLE VALUES
+   (3,'ELAN','2023-02-24');
+
+
+
+   
+
+
+
+
+
+
+
+
+
 
