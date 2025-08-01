@@ -1,1 +1,22 @@
+USE ROLE ACCOUNTADMIN;
+USE WAREHOUSE COMPUTE_WH;
+
+USE SCHEMA MYDB.MYSCHEMA;
+
+//---------Time Travel (Deleting some rows)-----------
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
 
